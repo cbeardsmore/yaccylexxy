@@ -1,3 +1,15 @@
+# LaTeX and Mac
+.DS_Store
+*.log
+*.gz
+*.out
+*.aux
+*.bbl
+*.blg
+*.run.xml
+*.toc
+*.bcf
+
 # Prerequisites
 *.d
 
