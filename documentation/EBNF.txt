@@ -58,7 +58,7 @@
 
 <range_type> ::= "[" <range> "]"
 
-<enumerated_type> ::= "{" <ident> { "," <ident } "}"
+<enumerated_type> ::= "{" <ident> { "," <ident> } "}"
 
 <basic_type> ::= <ident> 
 			   | <enumerated_type>
@@ -80,10 +80,10 @@
 <procedure_interace> ::= PROCEDURE <ident> [ <formal_parameters> ]
 
 <declaration_unit> ::= DECLARATION OF <ident>
-					   [ CONST <constant_declaration ]
+					   [ CONST <constant_declaration> ]
 					   [ VAR <variable_declaration> ]
-					   [ <type_delcaration> ]
+					   [ <type_declaration> ]
 					   [ <procedure_interface> ]
-					   [ <function_interface ]
+					   [ <function_interface> ]
 
 <basic_program> ::= <declaration_unit> <implemenetation_unit>
