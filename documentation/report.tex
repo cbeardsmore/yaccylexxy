@@ -15,7 +15,7 @@
 \usepackage{transparent}
 \usepackage{pdfpages}
 \usepackage[style=chicago-authordate,backend=biber]{biblatex}
-
+\usepackage{syntax}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 \usepackage{amssymb}
@@ -74,31 +74,132 @@
 % MAIN BODY
 
 \begin{center}
-	\section*{Introduction}
+	\section*{EBNF Specification}
 \end{center}
+\vspace{0.5cm}
+The full EBNF specification for \textit{QUENYALGOL} is as listed below. \\This EBNF follows the ISO BNF standard.
+\vspace{1cm}
 
-jkjkjli
+\setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
+\setlength{\grammarindent}{12em} % increase separation between LHS/RHS 
+
+\begin{grammar}
+	
+	<ident> ::= [a..z] \{ <ident> \}
+	
+	<inumber> ::= [0..9] \{ <number> \}
+	
+	<id_num> ::= [ <ident> | <number> ]
+	
+	<term> ::= <id_num> \{ ( `*'  | `/' ) <id_num> \}
+	
+	<expression> ::= <term> \{ ( `+' | `-' ) <term> \}
+	
+	<statement_loop> ::= <statement> \{  `;' <statement> \}
+	
+	<compound_statement> ::= `BEGIN' <statement_loop> `END'
+	
+	<for_statement> ::= `FOR' <ident> `:=' <expression> `DO' <statement_loop> `END'  `FOR'
+	
+	<do_statement> ::= `DO' <statement_loop> `WHILE' <expression> `END' `DO'
+	
+	<while_statement> ::= `WHILE' <expression> `DO' <statement_loop> `END' `WHILE'
+	
+	<if_statement> ::= `IF' <expression> `THEN' <statement> `END' `IF'
+	
+	<procedure_call> ::= `CALL' <ident>
+	
+	<assignment> ::= <ident> `:=' <expression>
+	
+	<statement> ::= <assignment>
+	\alt <procedure_call>
+	\alt <if_statement>
+	\alt <while_statement>
+	\alt <do_statement>
+	\alt <for_statement>
+	\alt <compound_statement>
+	
+	<implementation_part> ::= <statement>
+	
+	<function_declaration> ::= `FUNCTION' <ident> `;' <block> `;'
+	
+	<procedure_declaration> ::= `PROCEDURE' <ident> `;' <block> `;'
+	
+	<specification_part> ::= \{\}
+    \alt `CONST' <constant_declaration>
+	\alt `VAR' <variable_declaration>
+	\alt <procedure_declaration>
+	\alt <function_declaration>
+
+	<block> ::= <specification_part> <implementation_part>
+	
+	<implementation_unit> ::= `IMPLEMENTATION' `OF' <ident> <block> `.'
+	
+	<range> ::= <number> `..' <number>
+	
+	<array_type> ::= `ARRAY' <ident> `[' <range> `]' `OF' <type>
+	
+	<range_type> ::= `[' <range> `]'
+	
+	<enumerated_type> ::= `{' <ident> \{ `,' <ident> \} `}'
+	
+	<basic_type> ::= <ident> 
+	\alt <enumerated_type>
+	\alt <range_type>
+	
+	<type> ::= <basic_type>
+	\alt <array_type>
+	
+	<variable_declaration> ::= <ident> `:' <ident> \{ `,' <ident> `:' <ident> \} `;'
+	
+	<constant_declaration> ::= <ident> `=' <number> \{ `,' <ident> `:' <number> \} `;'
+	
+	<formal_parameters> ::= `(' <ident> \{ `;' <ident> \} `)'
+	
+	<type_declaration> ::= `TYPE' <ident> `:' <type> `;'
+	
+	<function_interface> ::= `FUNCTION' <ident> [ <formal_parameters> ]
+	
+	<procedure_interace> ::= `PROCEDURE' <ident> [ <formal_parameters> ]
+	
+	<declaration_unit> ::= `DECLARATION' `OF' <ident>
+    [ `CONST' <constant_declaration> ]
+	[ `VAR' <variable_declaration> ]
+	[ <type_declaration> ]
+	[ <procedure_interface> ]
+	[ <function_interface> ]
+	
+	<basic_program> ::= <declaration_unit> <implemenetation_unit>
+	
+\end{grammar}
+\vspace{0.5cm}
+
+%-------------------------------------------------------------------------------
 
 \begin{center}
 	\section*{Parser Implementation}
 \end{center}
+\vspace{0.5cm}
 
-\vspace*{0.8cm}
-\subsection*{EBNF}
+bjhbjhb
 
-sddsdsds
-
+\vspace{0.5cm}
 \subsection*{Lex}
+\vspace{0.5cm}
 
 sdsdsd
 
+\vspace{0.5cm}
 \subsection*{Yacc}
+\vspace{0.5cm}
 
 sdsdsd
 
+\vspace{0.5cm}
 \begin{center}
 	\section*{Design Decisions}
 \end{center}
+\vspace{0.5cm}
 
 sdasasdadadsa
 

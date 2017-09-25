@@ -1,0 +1,1 @@
+DO hello := world WILLY abc := bcd END DO
