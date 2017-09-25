@@ -1,11 +1,16 @@
 /* DEFINITIONS */
 
 %{
-#include <stdio.h>
 %}
 
-%%
+%% /* RULES */
 
-%%
+[ \t\n\r]+  ;
+.           {
+                fprintf(stderr, "Unexpected Token: '%s' at '%d'\n", yytext, *yytext);
+                exit(1);
+            }
 
-/* USER ROUTINES */
+%% /* USER ROUTINES */
+
+int yywrap(void) { return 1; }
