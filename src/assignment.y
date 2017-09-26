@@ -172,34 +172,106 @@ block:
     { GRAMMAR_MACRO(block) };
 
 specification_part:
+    _CONST_ constant_declaration
+    { GRAMMAR_MACRO(specification_part) }
+    | _VAR_ variable_declaration
+    { GRAMMAR_MACRO(specification_part) }
+    | procedure_declaration
+    { GRAMMAR_MACRO(specification_part) }
+    | function_declaration
+    { GRAMMAR_MACRO(specification_part) }
+    | {}
 
 procedure_declaration:
+    _PROCEDURE_ _IDENT_ _SEMICOLON_ block _SEMICOLON_
+    { GRAMMAR_MACRO(procedure_declaration) };
 
 function_declaration:
+    _FUNCTION_ _IDENT_ _SEMICOLON_ block _SEMICOLON_
+    { GRAMMAR_MACRO(function_declaration) };
 
 implementation_part:
+    statement
+    { GRAMMAR_MACRO(implementation_part) };
 
 statement:
+    assignment
+    { GRAMMAR_MACRO(statement) }
+    | procedure_call
+    { GRAMMAR_MACRO(statement) }
+    | if_statement
+    { GRAMMAR_MACRO(statement) }
+    | while_statement
+    { GRAMMAR_MACRO(statement) }
+    | do_statement
+    { GRAMMAR_MACRO(statement) }
+    | for_statement
+    { GRAMMAR_MACRO(statement) }
+    | compound_statement
+    { GRAMMAR_MACRO(statement) };
 
 assignment:
+    _IDENT_ _ASSIGNMENT_ expression
+    { GRAMMAR_MACRO(assignment) };
 
 procedure_call:
+    _CALL_ _IDENT_
+    { GRAMMAR_MACRO(procedure_call) };
 
 if_statement:
+    _IF_ expression _THEN_ statement _END_IF_
+    { GRAMMAR_MACRO(if_statement) };
 
 while_statement:
+    _WHILE_ expression _DO_ statement_loop _END_WHILE_
+    { GRAMMAR_MACRO(while_statement) };
 
 do_statement:
+    _DO_ statement_loop _WHILE_ expression _END_DO_
+    { GRAMMAR_MACRO(do_statement) };
 
 for_statement:
+    _FOR_ _IDENT_ _ASSIGNMENT_ expression _DO_ statement_loop _END_FOR_
+    { GRAMMAR_MACRO(for_statement) };
 
 compound_statement:
+    _BEGIN_ statement_loop _END_
+    { GRAMMAR_MACRO(compound_statement) };
 
 statement_loop:
+    statement
+    | statement_loop _SEMICOLON_ statement
+    { GRAMMAR_MACRO(statement_loop) };
 
-expression:
+expression :
+    expression_loop
+    { GRAMMAR_MACRO(expression) };
+
+expression_loop :
+    term
+    | expression_loop
+    '+'
+    term
+    { GRAMMAR_MACRO(expression_loop) }
+    | expression_loop
+    '-'
+    term
+    { GRAMMAR_MACRO(expression_loop) };
 
 term:
+    term_loop
+    { GRAMMAR_MACRO(term) };
+
+term_loop :
+    id_num
+    | expression_loop
+    '*'
+    id_num
+    { GRAMMAR_MACRO(term_loop) }
+    | expression_loop
+    '/'
+    id_num
+    { GRAMMAR_MACRO(term_loop) };
 
 id_num:
     _IDENT_
