@@ -1,5 +1,5 @@
 CC = gcc
-EXE = pl_ass
+EXE = QUENYARGOLINT
 LEX = flex
 YACC = bison
 LFILE = assignment.l

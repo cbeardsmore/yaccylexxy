@@ -170,3 +170,39 @@ implementation_unit:
 block:
     specification_part implementation_part
     { GRAMMAR_MACRO(block) };
+
+specification_part:
+
+procedure_declaration:
+
+function_declaration:
+
+implementation_part:
+
+statement:
+
+assignment:
+
+procedure_call:
+
+if_statement:
+
+while_statement:
+
+do_statement:
+
+for_statement:
+
+compound_statement:
+
+statement_loop:
+
+expression:
+
+term:
+
+id_num:
+    _IDENT_
+    { GRAMMAR_MACRO(id_num) }
+    | _NUMBER_
+    { GRAMMAR_MACRO(id_num) };
