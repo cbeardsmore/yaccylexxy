@@ -1,6 +1,7 @@
 /* DEFINITIONS */
 
 %{
+#include <stdio.h>
 #include "assignment.tab.h"
 
 #define TOKEN_MACRO(TYPE) { \
@@ -21,6 +22,7 @@
 "CALL"          TOKEN_MACRO(_CALL_)
 "CONST"         TOKEN_MACRO(_CONST_)
 "DECLARATION"   TOKEN_MACRO(_DECLARATION_)
+"DO"            TOKEN_MACRO(_DO_)
 "END"           TOKEN_MACRO(_END_)
 "END DO"        TOKEN_MACRO(_END_DO_)
 "END FOR"       TOKEN_MACRO(_END_FOR_)
@@ -29,7 +31,7 @@
 "FOR"           TOKEN_MACRO(_FOR_)
 "FUNCTION"      TOKEN_MACRO(_FUNCTION_)
 "IF"            TOKEN_MACRO(_IF_)
-"IMPLEMENATION" TOKEN_MACRO(_IMPLEMENTATION_)
+"IMPLEMENTATION" TOKEN_MACRO(_IMPLEMENTATION_)
 "OF"            TOKEN_MACRO(_OF_)
 "PROCEDURE"     TOKEN_MACRO(_PROCEDURE_)
 "THEN"          TOKEN_MACRO(_THEN_)

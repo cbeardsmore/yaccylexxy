@@ -5,6 +5,7 @@ YACC = bison
 LFILE = assignment.l
 YFILE = assignment.y
 CFILES = assignment.tab.c lex.yy.c
+EXTRA_FILES = assignment.tab.h y.output
 LEX_FLAG = -ll
 
 $(EXE): $(CFILES)
@@ -17,4 +18,4 @@ assignment.tab.c: $(YFILE)
 	$(YACC) -d $(YFILE)
 
 clean:
-	rm $(EXE) $(CFILES) assignment.tab.h
+	rm $(EXE) $(CFILES) $(EXTRA_FILES)

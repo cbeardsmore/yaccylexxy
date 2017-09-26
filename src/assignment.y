@@ -1,14 +1,21 @@
 %{
 #include <stdio.h>
+#include "assignment.tab.h"
 
 int yylex();
+int yyparse();
 
 void yyerror(const char* msg) {
         fprintf(stderr, "%s\n", msg);
    }
 
+int main(void) {
+       yyparse();
+       return 0;
+}
+
 #define GRAMMAR_MACRO(TYPE) { \
-        printf("YACC MATCHED RULE: " #TYPE "\n"); \
+        printf("\tYACC MATCHED RULE: " #TYPE "\n"); \
     }
 %}
 
@@ -19,6 +26,7 @@ void yyerror(const char* msg) {
     _CALL_
     _CONST_
     _DECLARATION_
+    _DO_
     _DOUBLE_DOT_
     _END_
     _END_DO_
@@ -46,16 +54,6 @@ basic_program:
         { GRAMMAR_MACRO(basic_program) }
     |	implementation_unit
         { GRAMMAR_MACRO(basic_program) };
-
-declaration_unit:
-    _DECLARATION_ _OF_ _IDENT_
-        opt_constant_declaration
-        opt_variable_declaration
-        opt_type_declaration
-        opt_procedure_interface
-        opt_function_interface
-    _DECLARATION_ _END_
-    { GRAMMAR_MACRO(declaration_unit) };
 
 opt_constant_declaration:
     _CONST_ constant_declaration
@@ -87,6 +85,16 @@ opt_formal_parameters:
     { GRAMMAR_MACRO(opt_formal_parameters) }
     | {};
 
+declaration_unit:
+    _DECLARATION_ _OF_ _IDENT_
+        opt_constant_declaration
+        opt_variable_declaration
+        opt_type_declaration
+        opt_procedure_interface
+        opt_function_interface
+    _DECLARATION_ _END_
+    { GRAMMAR_MACRO(declaration_unit) };
+
 procedure_interface:
     _PROCEDURE_ _IDENT_
         opt_formal_parameters
@@ -101,32 +109,33 @@ type_declaration:
     _TYPE_ _IDENT_ ':' type _SEMICOLON_
     { GRAMMAR_MACRO(type_declaration) };
 
+ident_loop_semicolon:
+    _IDENT_
+    | ident_loop_semicolon _SEMICOLON_ _IDENT_
+    { GRAMMAR_MACRO(ident_loop_semicolon) };
+
 formal_parameters:
     '(' ident_loop_semicolon ')'
     { GRAMMAR_MACRO(formal_parameters) };
-
-ident_loop_semicolon:
-    _IDENT_
-    | ident_loop _SEMICOLON_ _IDENT_
-    { GRAMMAR_MACRO(ident_loop_semicolon) };
-
-constant_declaration:
-    constant_loop _SEMICOLON_
-    { GRAMMAR_MACRO(constant_declaration) };
 
 constant_loop:
     _IDENT_ '=' _NUMBER_
     | constant_loop ',' _IDENT_ '=' _NUMBER_
     { GRAMMAR_MACRO(constant_loop) };
 
-variable_declaration:
-    variable_loop _SEMICOLON_
-    { GRAMMAR_MACRO(variable_declaration) };
+constant_declaration:
+    constant_loop _SEMICOLON_
+    { GRAMMAR_MACRO(constant_declaration) };
+
 
 variable_loop:
     _IDENT_ ':' _IDENT_
     | variable_loop ',' _IDENT_ ':' _IDENT_
     { GRAMMAR_MACRO(variable_loop) };
+
+variable_declaration:
+    variable_loop _SEMICOLON_
+    { GRAMMAR_MACRO(variable_declaration) };
 
 type:
     basic_type
@@ -142,14 +151,15 @@ basic_type:
     | range_type
     { GRAMMAR_MACRO(basic_type) };
 
-enumerated_type:
-    '{' ident_loop_comma '}'
-    { GRAMMAR_MACRO(enumerated_type) };
 
 ident_loop_comma:
     _IDENT_
     | ident_loop_comma ',' _IDENT_
     { GRAMMAR_MACRO(ident_loop_comma) };
+
+enumerated_type:
+    '{' ident_loop_comma '}'
+    { GRAMMAR_MACRO(enumerated_type) };
 
 range_type:
     '[' range ']'
@@ -247,7 +257,7 @@ expression :
     expression_loop
     { GRAMMAR_MACRO(expression) };
 
-expression_loop :
+expression_loop:
     term
     | expression_loop
     '+'
@@ -262,13 +272,13 @@ term:
     term_loop
     { GRAMMAR_MACRO(term) };
 
-term_loop :
+term_loop:
     id_num
-    | expression_loop
+    | term_loop
     '*'
     id_num
     { GRAMMAR_MACRO(term_loop) }
-    | expression_loop
+    | term_loop
     '/'
     id_num
     { GRAMMAR_MACRO(term_loop) };
