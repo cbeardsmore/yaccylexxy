@@ -1,9 +1,15 @@
 %{
 #include <stdio.h>
+
 int yylex();
+
 void yyerror(const char* msg) {
-      fprintf(stderr, "%s\n", msg);
+        fprintf(stderr, "%s\n", msg);
    }
+
+#define GRAMMAR_MACRO(TYPE) { \
+        printf("YACC MATCHED RULE: " #TYPE "\n"); \
+    }
 %}
 
 %token
@@ -34,4 +40,59 @@ void yyerror(const char* msg) {
     _WHILE_
 
 %%
-empty: | ";";
+
+basic_program:
+    declaration_unit
+        { GRAMMAR_MACRO(basic_program) }
+    |	implementation_unit
+        { GRAMMAR_MACRO(basic_program) };
+
+declaration_unit:
+    _DECLARATION_ _OF_ _IDENT_
+        opt_constant_declaration
+        opt_variable_declaration
+        opt_type_declaration
+        opt_procedure_interface
+        opt_function_interface
+    _DECLARATION_ _END_
+    { GRAMMAR_MACRO(declaration_unit) };
+
+opt_constant_declaration:
+    _CONST_ constant_declaration
+    { GRAMMAR_MACRO(opt_constant_declaration) }
+    | {};
+
+opt_variable_declaration:
+    _VAR_ constant_declaration
+    { GRAMMAR_MACRO(opt_variable_declaration) }
+    | {};
+
+opt_type_declaration:
+    type_declaration
+    { GRAMMAR_MACRO(opt_type_declaration) }
+    | {};
+
+opt_procedure_interface:
+    procedure_interface
+    { GRAMMAR_MACRO(opt_procedure_interface) }
+    | {};
+
+opt_function_interface:
+    function_interface
+    { GRAMMAR_MACRO(opt_function_interface) }
+    | {};
+
+opt_formal_parameters:
+    formal_parameters
+    { GRAMMAR_MACRO(opt_formal_parameters) }
+    | {};
+
+procedure_interface:
+    _PROCEDURE_ _IDENT_
+        opt_formal_parameters;
+    { GRAMMAR_MACRO(procedure_interface) };
+
+function_interface:
+    _FUNCTION_ _IDENT_
+        opt_formal_parameters
+    { GRAMMAR_MACRO(function_interface) };
