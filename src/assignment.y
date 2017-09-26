@@ -89,10 +89,84 @@ opt_formal_parameters:
 
 procedure_interface:
     _PROCEDURE_ _IDENT_
-        opt_formal_parameters;
+        opt_formal_parameters
     { GRAMMAR_MACRO(procedure_interface) };
 
 function_interface:
     _FUNCTION_ _IDENT_
         opt_formal_parameters
     { GRAMMAR_MACRO(function_interface) };
+
+type_declaration:
+    _TYPE_ _IDENT_ ':' type _SEMICOLON_
+    { GRAMMAR_MACRO(type_declaration) };
+
+formal_parameters:
+    '(' ident_loop_semicolon ')'
+    { GRAMMAR_MACRO(formal_parameters) };
+
+ident_loop_semicolon:
+    _IDENT_
+    | ident_loop _SEMICOLON_ _IDENT_
+    { GRAMMAR_MACRO(ident_loop_semicolon) };
+
+constant_declaration:
+    constant_loop _SEMICOLON_
+    { GRAMMAR_MACRO(constant_declaration) };
+
+constant_loop:
+    _IDENT_ '=' _NUMBER_
+    | constant_loop ',' _IDENT_ '=' _NUMBER_
+    { GRAMMAR_MACRO(constant_loop) };
+
+variable_declaration:
+    variable_loop _SEMICOLON_
+    { GRAMMAR_MACRO(variable_declaration) };
+
+variable_loop:
+    _IDENT_ ':' _IDENT_
+    | variable_loop ',' _IDENT_ ':' _IDENT_
+    { GRAMMAR_MACRO(variable_loop) };
+
+type:
+    basic_type
+    { GRAMMAR_MACRO(type) }
+    | array_type
+    { GRAMMAR_MACRO(type) };
+
+basic_type:
+    _IDENT_
+    { GRAMMAR_MACRO(basic_type) }
+    | enumerated_type
+    { GRAMMAR_MACRO(basic_type) }
+    | range_type
+    { GRAMMAR_MACRO(basic_type) };
+
+enumerated_type:
+    '{' ident_loop_comma '}'
+    { GRAMMAR_MACRO(enumerated_type) };
+
+ident_loop_comma:
+    _IDENT_
+    | ident_loop_comma ',' _IDENT_
+    { GRAMMAR_MACRO(ident_loop_comma) };
+
+range_type:
+    '[' range ']'
+    { GRAMMAR_MACRO(range_type) };
+
+array_type:
+    _ARRAY_ _IDENT_ '[' range ']' _OF_ type
+    { GRAMMAR_MACRO(array_type) };
+
+range:
+    _NUMBER_ _DOUBLE_DOT_ _NUMBER_
+    { GRAMMAR_MACRO(range) };
+
+implementation_unit:
+    _IMPLEMENTATION_ _OF_ _IDENT_ block '.'
+    { GRAMMAR_MACRO(implementation_unit) };
+
+block:
+    specification_part implementation_part
+    { GRAMMAR_MACRO(block) };
