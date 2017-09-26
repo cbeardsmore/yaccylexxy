@@ -1,12 +1,11 @@
 %{
 #include <stdio.h>
 #include "assignment.tab.h"
-
 int yylex();
 int yyparse();
 
 void yyerror(const char* msg) {
-        fprintf(stderr, "%s\n", msg);
+        fprintf(stderr, "yyeror: %s\n", msg);
    }
 
 int main(void) {
@@ -17,6 +16,8 @@ int main(void) {
 #define GRAMMAR_MACRO(TYPE) { \
         printf("\tYACC MATCHED RULE: " #TYPE "\n"); \
     }
+
+#define YYERROR_VERBOSE
 %}
 
 %token
@@ -47,13 +48,14 @@ int main(void) {
     _VAR_
     _WHILE_
 
+%start basic_program
 %%
 
 basic_program:
     declaration_unit
-        { GRAMMAR_MACRO(basic_program) }
-    |	implementation_unit
-        { GRAMMAR_MACRO(basic_program) };
+    { GRAMMAR_MACRO(basic_program) }
+    | implementation_unit
+    { GRAMMAR_MACRO(basic_program) };
 
 opt_constant_declaration:
     _CONST_ constant_declaration
