@@ -63,7 +63,7 @@ opt_constant_declaration:
     | {};
 
 opt_variable_declaration:
-    _VAR_ constant_declaration
+    _VAR_ variable_declaration
     { GRAMMAR_MACRO(opt_variable_declaration) }
     | {};
 

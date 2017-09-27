@@ -1,0 +1,10 @@
+IMPLEMENTATION OF one
+    IF two / 2 THEN
+        BEGIN
+            three := four + five / six - seven * eight;
+            FOR nine := ten DO
+                eleven := twelve
+            END FOR
+        END
+    END IF
+.

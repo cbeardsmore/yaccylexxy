@@ -1,0 +1,18 @@
+IMPLEMENTATION OF one
+
+    PROCEDURE two;
+        FUNCTION three;
+            IF hello + goodbye THEN
+                word := cactus
+            END IF;
+        FOR bottle := apple DO
+            hello := goodbye
+        END FOR;
+
+    WHILE three DO
+        DO
+            four := five * six
+        WHILE seven END DO
+    END WHILE
+
+.

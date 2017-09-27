@@ -1,1 +1,7 @@
-IMPLEMENTATION OF ddasds hello := 123 + 456 - 789.
+DECLARATION OF one
+    CONST ten = 10, eleven = 11, memes = 13;
+    VAR twelve : thirteen, fifteen: sixteen;
+    TYPE nine : { sixteen, seventeen, eighteen } ;
+    PROCEDURE two ( four; five; six )
+    FUNCTION three ( seven )
+DECLARATION END
