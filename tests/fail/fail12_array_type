@@ -1,0 +1,7 @@
+DECLARATION OF one
+    TYPE nine : ARRAY ten [0..9] OF OF hello ;
+DECLARATION END
+
+IMPLEMENTATION OF one
+    three := 1234 * 5678 + term - term
+.

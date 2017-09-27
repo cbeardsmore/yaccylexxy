@@ -5,3 +5,8 @@ DECLARATION OF one
     PROCEDURE two
     FUNCTION three
 DECLARATION END
+
+IMPLEMENTATION OF one
+    VAR two : three, four : five;
+    CALL six
+.

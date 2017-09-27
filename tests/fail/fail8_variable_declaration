@@ -1,0 +1,7 @@
+DECLARATION OF one
+    VAR twelve = thirteen, fifteen = sixteen;
+DECLARATION END
+
+IMPLEMENTATION OF one
+    three := 1234 * 5678 + term - term
+.

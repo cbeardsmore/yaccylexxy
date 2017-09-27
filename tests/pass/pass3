@@ -1,3 +1,8 @@
+DECLARATION OF one
+    TYPE nine : [1..9] ;
+    PROCEDURE two ( four; five; six )
+DECLARATION END
+
 IMPLEMENTATION OF one
     IF two / 2 THEN
         BEGIN

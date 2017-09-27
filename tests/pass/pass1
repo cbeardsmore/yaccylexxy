@@ -5,3 +5,8 @@ DECLARATION OF one
     PROCEDURE two ( four; five; six )
     FUNCTION three ( seven )
 DECLARATION END
+
+IMPLEMENTATION OF one
+    CONST two = 2;
+    three := 1234 * 5678 + term - term
+.

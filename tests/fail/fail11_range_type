@@ -1,4 +1,7 @@
+DECLARATION OF one
+    TYPE nine : [0..100 ;
+DECLARATION END
+
 IMPLEMENTATION OF one
-    CONST two = 2;
     three := 1234 * 5678 + term - term
 .

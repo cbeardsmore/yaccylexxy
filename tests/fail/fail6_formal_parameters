@@ -1,0 +1,7 @@
+DECLARATION OF one
+    PROCEDURE two ( four; five, six )
+DECLARATION END
+
+IMPLEMENTATION OF one
+    three := 1234 * 5678 + term - term
+.

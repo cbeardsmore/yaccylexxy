@@ -1,0 +1,7 @@
+DECLARATION OF one
+    TYPE nine : { sixteen, seventeen, eighteen ;
+DECLARATION END
+
+IMPLEMENTATION OF one
+    three := 1234 * 5678 + term - term
+.

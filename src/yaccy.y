@@ -71,9 +71,7 @@ int main(void) {
 /* GRAMMAR RULES - TKN_PRIMARY */
 
 basic_program:
-    declaration_unit
-    { GRAMMAR_MACRO(basic_program) }
-    | implementation_unit
+    declaration_unit implementation_unit
     { GRAMMAR_MACRO(basic_program) };
 
 /**************************************************************************/
