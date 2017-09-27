@@ -7,23 +7,23 @@
 CC = gcc
 EXE = QUENYARGOLINT
 LEX = flex
-YACC = bison
+YACC = yacc
 LFILE = lexxy.l
 YFILE = yaccy.y
-CFILES = yaccy.tab.c lex.yy.c
-EXTRA_FILES = yaccy.tab.h y.output
+CFILES = y.tab.c lex.yy.c
+EXTRA_FILES = y.tab.h y.output
 LEX_FLAG = -ll
 
 # EXECUTABLE
 $(EXE): $(CFILES)
-	$(CC) -o $(EXE) $(CFILES) $(LEX_FLAG)
+	$(CC) -o $(EXE) $(CFILES)
 
 # LEX
 lex.yy.c: $(LFILE)
 	$(LEX) $(LFILE)
 
 # YACC
-yaccy.tab.c: $(YFILE)
+y.tab.c: $(YFILE)
 	$(YACC) -d $(YFILE)
 
 clean:

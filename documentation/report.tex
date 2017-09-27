@@ -31,7 +31,7 @@
 \pagenumbering{arabic}
 \graphicspath{{./images/}}
 
-\addbibresource{bib/references.bib}
+\addbibresource{references.bib}
 \nocite{*}
 
 %-------------------------------------------------------------------------------
@@ -106,7 +106,7 @@
 	\section*{EBNF Specification}
 \end{center}
 \vspace{0.5cm}
-The full EBNF specification for \textit{QUENYALGOL} is as listed below. \\This EBNF follows the ISO BNF standard.
+The full EBNF specification for \textit{QUENYARGOL} is as listed below. \\This EBNF follows the ISO BNF standard.
 \vspace{1cm}
 
 \setlength{\grammarparsep}{20pt plus 1pt minus 1pt} % increase separation between rules
@@ -128,13 +128,13 @@ The full EBNF specification for \textit{QUENYALGOL} is as listed below. \\This E
 	
 	<compound_statement> ::= `BEGIN' <statement_loop> `END'
 	
-	<for_statement> ::= `FOR' <ident> `:=' <expression> `DO' <statement_loop> `END'  `FOR'
+	<for_statement> ::= `FOR' <ident> `:=' <expression> `DO' <statement_loop> `END FOR'
 	
-	<do_statement> ::= `DO' <statement_loop> `WHILE' <expression> `END' `DO'
+	<do_statement> ::= `DO' <statement_loop> `WHILE' <expression> `END DO'
 	
-	<while_statement> ::= `WHILE' <expression> `DO' <statement_loop> `END' `WHILE'
+	<while_statement> ::= `WHILE' <expression> `DO' <statement_loop> `END WHILE'
 	
-	<if_statement> ::= `IF' <expression> `THEN' <statement> `END' `IF'
+	<if_statement> ::= `IF' <expression> `THEN' <statement> `END IF'
 	
 	<procedure_call> ::= `CALL' <ident>
 	
@@ -181,7 +181,7 @@ The full EBNF specification for \textit{QUENYALGOL} is as listed below. \\This E
 	
 	<variable_declaration> ::= <ident> `:' <ident> \{ `,' <ident> `:' <ident> \} `;'
 	
-	<constant_declaration> ::= <ident> `=' <number> \{ `,' <ident> `:' <number> \} `;'
+	<constant_declaration> ::= <ident> `=' <number> \{ `,' <ident> `=' <number> \} `;'
 	
 	<formal_parameters> ::= `(' <ident> \{ `;' <ident> \} `)'
 	
@@ -197,6 +197,7 @@ The full EBNF specification for \textit{QUENYALGOL} is as listed below. \\This E
 	[ <type_declaration> ]
 	[ <procedure_interface> ]
 	[ <function_interface> ]
+	`DECLARATION' `END'
 	
 	<basic_program> ::= <declaration_unit> <implemenetation_unit>
 	
@@ -214,13 +215,13 @@ The full EBNF specification for \textit{QUENYALGOL} is as listed below. \\This E
 \subsection*{Lex}
 \vspace{0.5cm}
 
-The lexical analyser code within \textit{lexxy.l} defines a total of 43 tokens used in the \textit{QUENYARGOL} language. Upon seeing any of the tokens within the language, the analyser will print the lexeme found and return it for use by the Yacc component. This is performed by the use of \textit{TOKEN_MACRO}, to increase code reuse and keep the token rules simple.\\
+The lexical analyser code within \textit{lexxy.l} defines a total of 43 tokens used in the \textit{QUENYARGOL} language. Upon seeing any of the tokens within the language, the analyser will print the lexeme found and return it for use by the Yacc parser. This is performed by the use of \textit{TOKEN_MACRO}, to increase code reuse and keep the token rules simple.\\
 
-All tokens are both preceded and succeeded by the underscore character, to avoid any conflicts with in-built keywords such as \textit{BEGIN}. To avoid issues with the semicolon character being misinterpreted in the code, the token for this takes the form \textit{_SEMICOLON_}, as is the case with \textit{_DOUBLE_DOT_}. \\
+All tokens are both preceded and succeeded by the underscore character, to avoid any conflicts with in-built keywords such as \textit{BEGIN}. To avoid issues with the semicolon character being misinterpreted in the code, the token for this takes the form \textit{_SEMICOLON_}, as is also the case with \textit{_DOUBLE_DOT_}. \\
 
-The tokens for \textit{_NUMBER_} and \textit{_IDENT_} both use Unix style regular expressions to define their form. To ignore all whitespace in the code such as newlines and tabs, a similar regular expression is also used. The final token in the code is the \textit{empty} rule, used for when no token is matched. Upon reaching this rule, a lexer error is printed to standard error.\\
+The tokens for \textit{_NUMBER_} and \textit{_IDENT_} both use Unix style regular expressions to define their form. To ignore all whitespace in the code such as newlines and tabs, a similar regular expression is also used. The final token in the code is the \textit{empty} rule, used for when no token is matched (\cite{Levine}). Upon reaching this rule, a lexer error is printed to standard error.\\
 
-For both simplicity and regularity, it was decided that identifiers would be limited to only lowercase letters while uppercase characters were reserved for the languages keywords. In compliance with this limitation, it is also not valid to mix numbers into identifiers for the simplicity of the parser.
+For both simplicity and the regularity principle (\cite{Sebesta}), it was decided that identifiers would be limited to only lowercase letters while uppercase characters were reserved for the languages keywords. In compliance with this limitation, it is also not valid to mix numbers into identifiers for the simplicity of the parser.
 
 \vspace{0.5cm}
 \subsection*{Yacc}
@@ -228,7 +229,7 @@ For both simplicity and regularity, it was decided that identifiers would be lim
 
 The Yacc parser defines a total of 44 grammar rules. Building the parser through Yacc was relatively simple overall. Converting the EBNF specification rules into a valid Yacc format required only small syntactical changes. A \textit{GRAMMAR_MACRO} - similarly to the one used in the lex code - is utilized to print code whenever the parser matches a given rule.\\
 
-Extra rules were required within the Yacc code to enable optional terms in rules and the use of repeating loops in terms. The optional rules use the \textit{or} rule with an empty token to enable them to be neglected if required, such as in the \textit{specification_part} rule. The looping rules such as \textit{constant_loop} and \textit{statement_loop} allow for infinite loops of declarations seperately by a single token. The extra rules were required over the EBNF specification in this set to allow for this recursive-like functionality.
+Extra rules were required within the Yacc code to enable optional terms in rules and the use of repeating loops in terms. The optional rules use the \textit{or} rule with an empty token to enable them to be neglected if required, such as the optional terms in the \textit{specification_part} rule. The looping rules such as \textit{constant_loop} and \textit{statement_loop} allow for infinite loops of declarations seperately by a single token. The extra rules were required over the EBNF specification in this set to allow for this recursive-like functionality.
 
 %-------------------------------------------------------------------------------
 % SOURCE CODE

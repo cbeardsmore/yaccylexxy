@@ -11,7 +11,7 @@
 
 %{
 #include <stdio.h>
-#include "yaccy.tab.h"
+#include "y.tab.h"
 
 int yylex();
 int yyparse();

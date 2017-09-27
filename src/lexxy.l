@@ -11,7 +11,7 @@
 
 %{
 #include <stdio.h>
-#include "yaccy.tab.h"
+#include "y.tab.h"
 
 //MACRO to output the token found and return the token to yacc
 #define TOKEN_MACRO(TYPE) { \
