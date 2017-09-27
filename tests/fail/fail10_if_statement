@@ -1,1 +1,0 @@
-IFF 13 THEN hello := world END IFF

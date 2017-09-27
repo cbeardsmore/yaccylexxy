@@ -1,6 +1,18 @@
+/***************************************************************************
+*	FILE: yaccy.y
+*	AUTHOR: Connor Beardsmore - 15504319
+*	UNIT: PL200
+*	PURPOSE: Yacc file for parser generation
+*   LAST MOD: 27/09/17
+*   REQUIRES: stdio.h, yaccy.tab.h
+***************************************************************************/
+
+/* DEFINITIONS */
+
 %{
 #include <stdio.h>
-#include "assignment.tab.h"
+#include "yaccy.tab.h"
+
 int yylex();
 int yyparse();
 
@@ -13,12 +25,16 @@ int main(void) {
        return 0;
 }
 
+//MACRO to output the grammar matched
 #define GRAMMAR_MACRO(TYPE) { \
         printf("\tYACC MATCHED RULE: " #TYPE "\n"); \
     }
 
+//Enables more in-depth error messages from Yacc
 #define YYERROR_VERBOSE
 %}
+
+/**************************************************************************/
 
 %token
     _ASSIGNMENT_
@@ -51,11 +67,17 @@ int main(void) {
 %start basic_program
 %%
 
+/**************************************************************************/
+/* GRAMMAR RULES - TKN_PRIMARY */
+
 basic_program:
     declaration_unit
     { GRAMMAR_MACRO(basic_program) }
     | implementation_unit
     { GRAMMAR_MACRO(basic_program) };
+
+/**************************************************************************/
+/* DECLARATION UNIT */
 
 opt_constant_declaration:
     _CONST_ constant_declaration
@@ -97,6 +119,9 @@ declaration_unit:
     _DECLARATION_ _END_
     { GRAMMAR_MACRO(declaration_unit) };
 
+/**************************************************************************/
+/* DECLARATIONS AND INTERFACES */
+
 procedure_interface:
     _PROCEDURE_ _IDENT_
         opt_formal_parameters
@@ -129,7 +154,6 @@ constant_declaration:
     constant_loop _SEMICOLON_
     { GRAMMAR_MACRO(constant_declaration) };
 
-
 variable_loop:
     _IDENT_ ':' _IDENT_
     | variable_loop ',' _IDENT_ ':' _IDENT_
@@ -138,6 +162,9 @@ variable_loop:
 variable_declaration:
     variable_loop _SEMICOLON_
     { GRAMMAR_MACRO(variable_declaration) };
+
+/**************************************************************************/
+/* TYPES */
 
 type:
     basic_type
@@ -152,7 +179,6 @@ basic_type:
     { GRAMMAR_MACRO(basic_type) }
     | range_type
     { GRAMMAR_MACRO(basic_type) };
-
 
 ident_loop_comma:
     _IDENT_
@@ -174,6 +200,9 @@ array_type:
 range:
     _NUMBER_ _DOUBLE_DOT_ _NUMBER_
     { GRAMMAR_MACRO(range) };
+
+/**************************************************************************/
+/* IMPLEMENTATION AND SPECIFICATION */
 
 implementation_unit:
     _IMPLEMENTATION_ _OF_ _IDENT_ block '.'
@@ -205,6 +234,9 @@ function_declaration:
 implementation_part:
     statement
     { GRAMMAR_MACRO(implementation_part) };
+
+/**************************************************************************/
+/* STATEMENTS */
 
 statement:
     assignment
@@ -255,6 +287,9 @@ statement_loop:
     | statement_loop _SEMICOLON_ statement
     { GRAMMAR_MACRO(statement_loop) };
 
+/**************************************************************************/
+/* EXPRESSIONS, TERMS AND IDENTIFIERS */
+
 expression :
     expression_loop
     { GRAMMAR_MACRO(expression) };
@@ -290,3 +325,5 @@ id_num:
     { GRAMMAR_MACRO(id_num) }
     | _NUMBER_
     { GRAMMAR_MACRO(id_num) };
+
+/**************************************************************************/

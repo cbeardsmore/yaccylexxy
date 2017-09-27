@@ -1,3 +1,0 @@
-PROCEDURE calcSumArray;
-CONST world = 42;
-world := 43;
