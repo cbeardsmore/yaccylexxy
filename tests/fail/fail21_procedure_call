@@ -1,0 +1,12 @@
+DECLARATION OF one
+    CONST ten = 10;
+    VAR twelve : thirteen;
+    TYPE nine : ARRAY fourteen[0..42] OF hello ;
+    PROCEDURE two
+    FUNCTION three
+DECLARATION END
+
+IMPLEMENTATION OF one
+    VAR two : three, four : five;
+    CALL 666
+.

@@ -1,0 +1,9 @@
+DECLARATION OF one DECLARATION END
+
+IMPLEMENTATION OF one
+    PROCEDURE two;
+    DO
+        four := five * six
+    WHILE seven .END DO
+    two := two
+.

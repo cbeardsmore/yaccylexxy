@@ -1,0 +1,10 @@
+DECLARATION OF one
+DECLARATION END
+
+IMPLEMENTATION OF one
+    BEGIN
+        hello := goodbye;
+        IF this THEN goodbye := hello END IF;
+        goodbye := helloagain;
+    END
+.

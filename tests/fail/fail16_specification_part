@@ -1,0 +1,6 @@
+DECLARATION OF one DECLARATION END
+
+IMPLEMENTATION OF one
+    CONSTANT new = 11
+    three := 1234 * 5678 + term - term
+.

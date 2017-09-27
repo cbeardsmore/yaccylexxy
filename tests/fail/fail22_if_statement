@@ -1,0 +1,8 @@
+DECLARATION OF one DECLARATION END
+
+IMPLEMENTATION OF one
+    PROCEDURE two;
+    IF hello + goodbye THEN
+        hello := goodbye
+    ENDIF
+.

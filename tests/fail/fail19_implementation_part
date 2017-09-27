@@ -1,0 +1,6 @@
+DECLARATION OF one DECLARATION END
+
+IMPLEMENTATION OF one
+    PROCEDURE newproc; hello := goodbye;
+    invalidstatement
+.

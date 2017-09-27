@@ -1,0 +1,10 @@
+DECLARATION OF one DECLARATION END
+
+IMPLEMENTATION OF one
+    PROCEDURE two;
+    WHILE DO
+        four := five * six;
+        six := four / five
+    END WHILE;
+    two := two
+.

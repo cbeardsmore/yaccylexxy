@@ -1,0 +1,7 @@
+DECLARATION OF one
+    CONST new = 9o9
+DECLARATION END
+
+IMPLEMENTATION OF one
+    this := that
+.

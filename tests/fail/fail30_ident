@@ -1,0 +1,5 @@
+DECLARATION OF camelCaseIsDenied DECLARATION END
+
+IMPLEMENTATION OF one
+    this := that
+.

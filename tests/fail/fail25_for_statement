@@ -1,0 +1,10 @@
+DECLARATION OF one DECLARATION END
+
+IMPLEMENTATION OF one
+    PROCEDURE two;
+    FOR this == that DO
+        this := thatagain;
+        thatagain := thisagain
+    END FOR;
+    this := finallythat
+.
