@@ -19,6 +19,7 @@
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 \usepackage{amssymb}
+\usepackage{listings}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -32,6 +33,34 @@
 
 \addbibresource{bib/references.bib}
 \nocite{*}
+
+%-------------------------------------------------------------------------------
+% CODE HIGHLIGHTING FOR LISTINGS
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.99,0.99,0.99}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+
+\lstset{style=mystyle}
 
 %-------------------------------------------------------------------------------
 \begin{document}
@@ -176,37 +205,47 @@ The full EBNF specification for \textit{QUENYALGOL} is as listed below. \\This E
 
 %-------------------------------------------------------------------------------
 
+\newpage
 \begin{center}
 	\section*{Parser Implementation}
 \end{center}
-\vspace{0.5cm}
+\vspace{1cm}
 
-bjhbjhb
-
-\vspace{0.5cm}
 \subsection*{Lex}
 \vspace{0.5cm}
 
-sdsdsd
+The lexical analyser code within \textit{lexxy.l} defines a total of 43 tokens used in the \textit{QUENYARGOL} language. Upon seeing any of the tokens within the language, the analyser will print the lexeme found and return it for use by the Yacc component. This is performed by the use of \textit{TOKEN_MACRO}, to increase code reuse and keep the token rules simple.\\
+
+All tokens are both preceded and succeeded by the underscore character, to avoid any conflicts with in-built keywords such as \textit{BEGIN}. To avoid issues with the semicolon character being misinterpreted in the code, the token for this takes the form \textit{_SEMICOLON_}, as is the case with \textit{_DOUBLE_DOT_}. \\
+
+The tokens for \textit{_NUMBER_} and \textit{_IDENT_} both use Unix style regular expressions to define their form. To ignore all whitespace in the code such as newlines and tabs, a similar regular expression is also used. The final token in the code is the \textit{empty} rule, used for when no token is matched. Upon reaching this rule, a lexer error is printed to standard error.\\
+
+For both simplicity and regularity, it was decided that identifiers would be limited to only lowercase letters while uppercase characters were reserved for the languages keywords. In compliance with this limitation, it is also not valid to mix numbers into identifiers for the simplicity of the parser.
 
 \vspace{0.5cm}
 \subsection*{Yacc}
 \vspace{0.5cm}
 
-sdsdsd
+The Yacc parser defines a total of 44 grammar rules. Building the parser through Yacc was relatively simple overall. Converting the EBNF specification rules into a valid Yacc format required only small syntactical changes. A \textit{GRAMMAR_MACRO} - similarly to the one used in the lex code - is utilized to print code whenever the parser matches a given rule.\\
 
-\vspace{0.5cm}
+Extra rules were required within the Yacc code to enable optional terms in rules and the use of repeating loops in terms. The optional rules use the \textit{or} rule with an empty token to enable them to be neglected if required, such as in the \textit{specification_part} rule. The looping rules such as \textit{constant_loop} and \textit{statement_loop} allow for infinite loops of declarations seperately by a single token. The extra rules were required over the EBNF specification in this set to allow for this recursive-like functionality.
+
+%-------------------------------------------------------------------------------
+% SOURCE CODE
+
+\newpage
 \begin{center}
-	\section*{Design Decisions}
+	\section*{Source Code}
 \end{center}
-\vspace{0.5cm}
 
-sdasasdadadsa
+\subsection*{lexxy.l}
+\lstinputlisting[language=C,linerange={} ]{../src/lexxy.l}\pagebreak{}
+\subsection*{yaccy.y}
+\lstinputlisting[language=C,linerange={} ]{../src/yaccy.y}\pagebreak{}
 
 %-------------------------------------------------------------------------------   
 % REFERENCES
 
-\break
 \setlength\bibitemsep{4\itemsep}
 \printbibliography[title={References}]
 
